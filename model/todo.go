@@ -25,17 +25,21 @@ func (todo *Todo) Create() map[string]interface{} {
 	return response
 }
 
-func GetTodoList() []*Todo {
-	// create array of type Todo
-	todoList := make([]*Todo, 0)
+func GetTodoList() map[string]interface{} {
+	// create slice of type Todo
+	todoList := make([]Todo, 0)
 
 	// SELECT * FROM Todo
 	err := getDB().Find(&todoList).Error
 
 	if err != nil {
-		return nil
+		return util.Message(false, "Failed to get data, connection error.")
 	}
-	return todoList
+
+	response := util.Message(true, "Success.")
+	response["data"] = todoList
+
+	return response
 }
 
 func GetTodo(id string) Todo {

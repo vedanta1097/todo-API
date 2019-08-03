@@ -22,9 +22,7 @@ func CreateTodo(w http.ResponseWriter, r *http.Request) {
 }
 
 func ShowTodoList(w http.ResponseWriter, r *http.Request) {
-	data := model.GetTodoList()
-	response := util.Message(true, "Success!")
-	response["data"] = data
+	response := model.GetTodoList()
 	util.Respond(w, response)
 }
 
