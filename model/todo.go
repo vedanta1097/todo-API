@@ -45,10 +45,18 @@ func GetTodo(id string) Todo {
 	return todo
 }
 
-func SaveData(todo *Todo) map[string]interface{} {
+func Save(todo *Todo) map[string]interface{} {
 	err := getDB().Save(todo).Error
 	if err != nil {
 		return util.Message(false, "failed to save to DB")
 	}
 	return util.Message(true, "Data successfully updated.")
+}
+
+func Delete(todo *Todo) map[string]interface{} {
+	err := getDB().Delete(todo).Error
+	if err != nil {
+		return util.Message(false, "failed to delete data.")
+	}
+	return util.Message(true, "Data successfully deleted.")
 }

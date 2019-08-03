@@ -42,10 +42,15 @@ func UpdateTodo(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("error decoding data.")
 	}
 
-	response := model.SaveData(&todo)
+	response := model.Save(&todo)
 	util.Respond(w, response)
 }
 
 func DeleteTodo(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
 
+	todo := model.GetTodo(id)
+	response := model.Delete(&todo)
+	util.Respond(w, response)
 }
