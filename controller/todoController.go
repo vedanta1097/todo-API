@@ -36,7 +36,13 @@ func UpdateTodo(w http.ResponseWriter, r *http.Request) {
 	// get todo item according to retrieved id
 	todo := model.GetTodo(id)
 
-	// get updated data from client
+	// if there is no todo data of ID=id in database, then send error message
+	if todo.ID <= 0 {
+		util.Respond(w, util.Message(false, "Failed to update data. Invalid id."))
+		return
+	}
+
+	// update todo according to data from client
 	err := json.NewDecoder(r.Body).Decode(&todo)
 	if err != nil {
 		fmt.Println("error decoding data.")
@@ -51,6 +57,12 @@ func DeleteTodo(w http.ResponseWriter, r *http.Request) {
 	id := vars["id"]
 
 	todo := model.GetTodo(id)
+
+	if todo.ID <= 0 {
+		util.Respond(w, util.Message(false, "Failed to delete data. Invalid id."))
+		return
+	}
+
 	response := model.Delete(&todo)
 	util.Respond(w, response)
 }

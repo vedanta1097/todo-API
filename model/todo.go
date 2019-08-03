@@ -46,7 +46,9 @@ func GetTodo(id string) Todo {
 }
 
 func Save(todo *Todo) map[string]interface{} {
+	// save todo data
 	err := getDB().Save(todo).Error
+
 	if err != nil {
 		return util.Message(false, "failed to save to DB")
 	}
@@ -54,7 +56,9 @@ func Save(todo *Todo) map[string]interface{} {
 }
 
 func Delete(todo *Todo) map[string]interface{} {
+	// delete todo data
 	err := getDB().Delete(todo).Error
+
 	if err != nil {
 		return util.Message(false, "failed to delete data.")
 	}
