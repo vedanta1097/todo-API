@@ -37,3 +37,18 @@ func GetTodoList() []*Todo {
 	}
 	return todoList
 }
+
+func GetTodo(id string) Todo {
+	todo := Todo{}
+	// select todo where ID = id
+	getDB().First(&todo, id)
+	return todo
+}
+
+func SaveData(todo *Todo) map[string]interface{} {
+	err := getDB().Save(todo).Error
+	if err != nil {
+		return util.Message(false, "failed to save to DB")
+	}
+	return util.Message(true, "Data successfully updated.")
+}
